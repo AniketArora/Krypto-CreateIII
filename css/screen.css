@@ -344,7 +344,6 @@ input::placeholder {
 }
 
 .c-main__item {
-	box-shadow: var(--shadow-neutral);
 	background-color: #fff;
 	padding: calc(var(--global-baseline) * 5);
 }
@@ -352,6 +351,7 @@ input::placeholder {
 .c-brand {
 	font-size: 56px;
 	font-weight: 700;
+	padding: 0 calc(var(--global-baseline) * 8);
 }
 
 @media screen and (min-width: 960px) {
@@ -366,11 +366,12 @@ input::placeholder {
 
 	.c-app__main {
 		height: calc(100vh - var(--layout-header-height));
-	}
-
-	.c-app__container{
 		overflow-y: auto;
 		overflow-x: hidden;
+	}
+
+	.c-app__header {
+		display: block;
 	}
 
 /*------------------------------------*\
