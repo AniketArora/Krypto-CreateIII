@@ -35,6 +35,7 @@
 	/* Font weights */
 
 	/* Shadows */
+	--shadow-neutral: 0 2px 6px rgba(0, 0, 0, 0.04);
 
 	/* border radius */
 
@@ -315,16 +316,32 @@ input::placeholder {
 
 .c-app {
 	min-height: 100vh;
-	margin: auto;
 }
 
 .c-app__header {
 	background-color: var(--color-neutral-x-light);
-	box-shadow: var(--shadow-neutral);
 	display: none;
+	box-shadow: var(--shadow-neutral);
+}
+
+.c-app__container {
+	margin: auto;
+}
+
+.c-app__main {
+	display: grid;
+	grid-gap: calc(var(--global-baseline) * 5);
+}
+
+.c-main__item {
+	box-shadow: var(--shadow-neutral);
+	background-color: #fff;
+	padding: calc(var(--global-baseline) * 5);
 }
 
 .c-brand {
+	font-size: 56px;
+	font-weight: 700;
 }
 
 @media screen and (min-width: 960px) {
