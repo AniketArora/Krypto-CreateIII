@@ -2,6 +2,20 @@
 #FONTS
 \*------------------------------------*/
 
+@font-face {
+	font-family: 'futura-pt';
+	font-weight: 500;
+	src: url('../assets/fonts/FuturaPTMedium.otf') format('otf');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'futura-pt';
+	font-weight: 700;
+	src: url('../assets/fonts/FuturaPTHeavy.otf') format('otf');
+	font-display: swap;
+}
+
 /*------------------------------------*\
 #Variables
 \*------------------------------------*/
@@ -33,7 +47,7 @@
 html {
 	font-size: 15px;
 	line-height: 1.5;
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'futura-pt', sans-serif;
 	color: var(--color-neutral-dark);
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;
