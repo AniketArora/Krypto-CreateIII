@@ -328,9 +328,19 @@ input::placeholder {
 	margin: auto;
 }
 
-.c-app__main {
+.c-app__grid {
 	display: grid;
 	grid-gap: calc(var(--global-baseline) * 5);
+}
+
+@media screen and (min-width: 992px) {
+	.c-app__grid {
+		grid-template-columns: repeat(6, 1fr);
+	}
+
+	.c-main__item {
+		grid-column: span 6;
+	}
 }
 
 .c-main__item {
@@ -356,6 +366,9 @@ input::placeholder {
 
 	.c-app__main {
 		height: calc(100vh - var(--layout-header-height));
+	}
+
+	.c-app__container{
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
@@ -369,6 +382,31 @@ input::placeholder {
     ---
     Utility classes to put specefic grid size onto elements
 */
+
+@media (min-width: 992px) {
+	.u-x-span-1-bp3 {
+		grid-column: span 1;
+	}
+
+	.u-x-span-2-bp3 {
+		grid-column: span 2;
+	}
+
+	.u-x-span-3-bp3 {
+		grid-column: span 3;
+	}
+
+	.u-x-span-4-bp3 {
+		grid-column: span 4;
+	}
+
+	.u-x-span-5-bp3 {
+		grid-column: span 5;
+	}
+
+	.u-x-span-6-bp3 {
+		grid-column: span 6;
+	}
 
 /*
     Utilities: color
