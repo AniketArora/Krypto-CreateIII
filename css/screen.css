@@ -23,6 +23,15 @@
 :root {
 	/* colors */
 
+	--color-alpha-light-x: #ffffff;
+	--color-alpha-light: #c7c7c7;
+	--color-alpha: #808080;
+	--color-alpha-dark: #444444;
+	--color-alpha-x-dark: #000000;
+
+	--color-neutral-light: var(--color-alpha-light);
+	--color-neutral-dark: var(--color-alpha-x-dark);
+
 	/* Font weights */
 
 	/* Shadows */
@@ -32,6 +41,10 @@
 	/* transitions */
 
 	/* Grid System */
+
+	--global-baseline: 8px;
+
+	--layout-header-height: calc(var(--global-baseline) * 5);
 }
 
 /*------------------------------------*\
@@ -300,6 +313,36 @@ input::placeholder {
 #COMPONENTS
 \*------------------------------------*/
 
+.c-app {
+	min-height: 100vh;
+	margin: auto;
+}
+
+.c-app__header {
+	background-color: var(--color-neutral-x-light);
+	box-shadow: var(--shadow-neutral);
+	display: none;
+}
+
+.c-brand {
+}
+
+@media screen and (min-width: 960px) {
+
+	.c-app {
+		display: grid;	
+	}
+
+	.c-app__header {
+		display: block;
+	}
+
+	.c-app__main {
+		height: calc(100vh - var(--layout-header-height));
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
 /*------------------------------------*\
 #UTILITIES
 \*------------------------------------*/
@@ -377,7 +420,7 @@ input::placeholder {
 }
 
 .u-max-width-lg {
-	max-width: 63.5em !important;
+	max-width: 85em !important;
 }
 
 .u-max-width-none {
