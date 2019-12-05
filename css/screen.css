@@ -225,6 +225,10 @@ input::placeholder {
 	color: var(--color-neutral-light);
 }
 
+span {
+	font-weight: 700;
+	font-size: 20px;
+}
 /*------------------------------------*\
 #OBJECTS
 \*------------------------------------*/
@@ -315,13 +319,15 @@ input::placeholder {
 \*------------------------------------*/
 
 .c-app {
-	min-height: 100vh;
+	height: 100vh;
+	grid-template-rows: auto 1fr;
 }
 
 .c-app__header {
 	background-color: var(--color-neutral-x-light);
 	display: none;
 	box-shadow: var(--shadow-neutral);
+	z-index: 1;
 }
 
 .c-app__container {
@@ -331,6 +337,7 @@ input::placeholder {
 .c-app__grid {
 	display: grid;
 	grid-gap: calc(var(--global-baseline) * 5);
+	justify-items: center;
 }
 
 @media screen and (min-width: 992px) {
@@ -354,6 +361,11 @@ input::placeholder {
 	padding: 0 calc(var(--global-baseline) * 8);
 }
 
+.c-image {
+	height: 80%;
+	width: 80%;
+}
+
 @media screen and (min-width: 960px) {
 
 	.c-app {
@@ -365,7 +377,6 @@ input::placeholder {
 	}
 
 	.c-app__main {
-		height: calc(100vh - var(--layout-header-height));
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
@@ -373,6 +384,19 @@ input::placeholder {
 	.c-app__header {
 		display: block;
 	}
+}
+
+.c-main__left {
+	display: flex;
+	align-items: center;
+	text-align: right;
+}
+
+.c-main__right {
+	display: flex;
+	align-items: center;
+	text-align: left;
+}
 
 /*------------------------------------*\
 #UTILITIES
