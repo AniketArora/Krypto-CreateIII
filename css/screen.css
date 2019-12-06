@@ -32,20 +32,44 @@
 	--color-neutral-light: var(--color-alpha-light);
 	--color-neutral-dark: var(--color-alpha-x-dark);
 
+	--global-color-alpha-x-transparent: #ffffff4d;
+	--global-color-error-x-transparent: #FF33334d;
+
 	/* Font weights */
+	--global-default-weight: 400;
+
 
 	/* Shadows */
 	--shadow-neutral: 0 2px 6px rgba(0, 0, 0, 0.04);
 
 	/* border radius */
+	--global-borderRadius: 3px;
+	--global-borderWidth: 1px;
 
 	/* transitions */
+	--global-transitionEasing-out: ease-out;
+	--global-transitionEasing-out-cubic: cubic-bezier(0.22, 0.61, 0.36, 1);
+	--global-transitionDuration-alpha: .1s;
+	--global-transitionDuration-beta: .2s;
+	--global-transitionDuration-gamma: .3s;
 
 	/* Grid System */
 
 	--global-baseline: 8px;
+	--global-whitespace: calc(var(--global-baseline) * 3);
+
+    --global-whitespace-xs: calc(var(--global-baseline) * .5);
+    --global-whitespace-sm: calc(var(--global-baseline) * 1);
+    --global-whitespace-md: calc(var(--global-baseline) * 2);
+    --global-whitespace-lg: calc(var(--global-baseline) * 4);
+    --global-whitespace-xl: calc(var(--global-whitespace) * 2);
+    --global-whitespace-xxl: calc(var(--global-whitespace) * 3);
 
 	--layout-header-height: calc(var(--global-baseline) * 5);
+
+	--global-input-focus-boxShadowSpread: 0 0 0 3px;
+    --global-input-focus-boxShadowColor: var(--global-color-alpha-x-transparent);
+    --global-input-error-boxShadowColor: var(--global-color-error-x-transparent);
 }
 
 /*------------------------------------*\
@@ -59,7 +83,8 @@
 */
 
 html {
-	font-size: 15px;
+	font-size: 16px;
+	font-weight: var(--global-default-weight);
 	line-height: 1.5;
 	font-family: 'futura-pt', sans-serif;
 	color: var(--color-neutral-dark);
@@ -396,6 +421,65 @@ span {
 	display: flex;
 	align-items: center;
 	text-align: left;
+}
+
+.c-form-field {
+    position: relative;
+}
+
+.is-floating,
+.c-form-field:focus-within .c-label--floating {
+    transform: translateY(calc(var(--global-baseline) * -3))
+}
+
+.c-label {
+    margin-bottom: 0;
+    font-size: 14px;
+    padding-bottom: var(--global-whitespace-sm);    
+    line-height: calc(var(--global-baseline) * 2);
+    color: var(--color-alpha-x-dark);
+}
+
+.c-label--floating {
+    position: absolute;
+    top: calc(var(--global-baseline) * 2);
+    left: var(--global-whitespace-sm);
+    padding: 0  var(--global-whitespace-sm);
+    background-color: var(--color-alpha-light-x);
+    transition: transform var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
+    z-index: 1;
+}
+
+.c-input {
+    --input-transition: all var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    border-radius: var(--global-borderRadius);
+    border: var(--global-borderWidth) solid var(--color-alpha-x-dark);
+    background-color: var(--color-alpha-light-x);
+    color: var(--color-alpha-x-dark);
+    font-family: inherit;
+    font-size: 16px;
+    line-height: calc(var(--global-baseline) * 3);
+    padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
+    outline: none;
+    transition: var(--input-transition);
+}
+
+.c-input:hover {
+    border-color: var(--color-alpha-x-dark);
+}
+
+.c-input:focus,
+.c-input:active {
+    border-color: var(--color-alpha-x-dark);
+    box-shadow: var(--global-input-focus-boxShadowSpread) var(--global-input-focus-boxShadowColor);
+}
+
+.c-input--with-floating-label:focus {
+    box-shadow: 0 0 0 1px var(--global-input-focus-borderColor);
 }
 
 /*------------------------------------*\
