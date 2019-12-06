@@ -4,6 +4,13 @@
 
 @font-face {
 	font-family: 'futura-pt';
+	font-weight: 400;
+	src: url('../assets/fonts/FuturaPTBook.otf') format('otf');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'futura-pt';
 	font-weight: 500;
 	src: url('../assets/fonts/FuturaPTMedium.otf') format('otf');
 	font-display: swap;
