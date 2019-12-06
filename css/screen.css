@@ -76,7 +76,11 @@
 
 	--global-input-focus-boxShadowSpread: 0 0 0 3px;
     --global-input-focus-boxShadowColor: var(--global-color-alpha-x-transparent);
-    --global-input-error-boxShadowColor: var(--global-color-error-x-transparent);
+	--global-input-error-boxShadowColor: var(--global-color-error-x-transparent);
+	
+	--color-input-alpha-x-light: #81B4E7;
+	--color-input-alpha: #5398DE;
+	--color-input-alpha-x-dark: #447DB6;
 }
 
 /*------------------------------------*\
@@ -346,6 +350,35 @@ span {
 	border: 0;
 }
 
+/*
+    Object: Button reset
+    ---
+    Small button reset object
+*/
+
+.o-button-reset {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+
+    /* inherit font & color from ancestor */
+    color: inherit;
+    font: inherit;
+
+    /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+    line-height: normal;
+
+    /* Corrects font smoothing for webkit */
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+
+    /* Corrects inability to style clickable `input` types in iOS */
+    -webkit-appearance: none;
+}
+
 /*------------------------------------*\
 #COMPONENTS
 \*------------------------------------*/
@@ -487,6 +520,45 @@ span {
 
 .c-input--with-floating-label:focus {
     box-shadow: 0 0 0 1px var(--global-input-focus-borderColor);
+}
+
+/*
+    Component: Button
+    ---
+    Class to put on form buttons or
+*/
+
+.c-button {
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: var(--global-borderRadius);
+    border: var(--global-borderWidth) solid var(--color-input-alpha-x-dark);
+    background-color: var(--color-input-alpha);
+    color: #fff;
+    padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
+    line-height: calc(var(--global-baseline) * 3);
+    width: 100%;
+    outline: none;
+	box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-alpha-x-light);
+    transition: all var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
+}
+
+.c-button:hover {
+    border-color: var(--color-input-alpha);
+	background-color: var(--color-input-alpha-x-dark);
+	box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-input-alpha-x-light);
+}
+
+.c-button:focus {	
+    background-color: var(--color-input-alpha);
+    border-color: var(--color-input-alpha-x-dark);
+    box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-input-alpha-x-light);
+}
+
+.c-button:active {
+    background-color: var(--color-input-alpha-x-dark);
+    border-color: var(--color-input-alpha-x-dark);
+    box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-input-alpha-x-light);
 }
 
 /*------------------------------------*\
