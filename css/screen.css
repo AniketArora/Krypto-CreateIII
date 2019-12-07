@@ -506,6 +506,11 @@ span {
 	justify-content: center;
 }
 
+.c-item__formfield {
+	width: 80%;
+	margin: auto;
+}
+
 .c-form {
 	display: flex;
 	flex-direction: column;
@@ -516,6 +521,10 @@ span {
 	flex-direction: column;
 	align-items: center;
 	padding-bottom: var(--global-whitespace-lg);
+}
+
+.c-item__title--main {
+	font-size: 40px;
 }
 
 .c-item__title--center {
@@ -541,7 +550,7 @@ span {
 	font-size: 14px;
 	padding-bottom: var(--global-whitespace-sm);
 	line-height: calc(var(--global-baseline) * 2);
-	color: var(--color-alpha-x-dark);
+	color: var(--color-alpha);
 }
 
 .c-label--floating {
@@ -552,6 +561,7 @@ span {
 	background-color: var(--color-alpha-light-x);
 	transition: transform var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
 	z-index: 1;
+	color: var(--color-alpha-x-dark);
 }
 
 .c-input {
@@ -601,10 +611,11 @@ span {
 	color: #fff;
 	padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
 	line-height: calc(var(--global-baseline) * 3);
-	width: 100%;
+	width: 25%;
 	outline: none;
 	box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-alpha-x-light);
 	transition: all var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
+	align-self: flex-end;
 }
 
 .c-button:hover {
