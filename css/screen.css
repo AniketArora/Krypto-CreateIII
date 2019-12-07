@@ -418,6 +418,8 @@ span {
 .c-main__item {
 	background-color: #fff;
 	padding: calc(var(--global-baseline) * 5);
+	width: 100%;
+	display: flex;
 }
 
 .c-brand {
@@ -451,6 +453,10 @@ span {
 	}
 }
 
+.c-main__top {
+	padding-top: 0;
+}
+
 .c-main__left {
 	display: flex;
 	align-items: center;
@@ -461,6 +467,44 @@ span {
 	display: flex;
 	align-items: center;
 	text-align: left;
+}
+
+.c-main__center{
+	padding-top: 0;
+}
+
+.c-main__bottom{
+	padding-top: 0;
+}
+
+.c-item {
+	margin: auto;
+}
+
+.c-item__image {
+	display: flex;
+	justify-content: center;
+}
+
+.c-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.c-footer__center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom: var(--global-whitespace-lg);
+}
+
+.c-item__title--center {
+	text-align: center;
+}
+
+.c-image__soon {
+	width: 50%;
+	height: 50%;
 }
 
 .c-form-field {
