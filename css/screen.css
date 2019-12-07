@@ -2,6 +2,27 @@
 #FONTS
 \*------------------------------------*/
 
+@font-face {
+	font-family: 'futura-pt';
+	font-weight: 400;
+	src: url('../assets/fonts/FuturaPTBook.otf') format('otf');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'futura-pt';
+	font-weight: 500;
+	src: url('../assets/fonts/FuturaPTMedium.otf') format('otf');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'futura-pt';
+	font-weight: 700;
+	src: url('../assets/fonts/FuturaPTHeavy.otf') format('otf');
+	font-display: swap;
+}
+
 /*------------------------------------*\
 #Variables
 \*------------------------------------*/
@@ -9,15 +30,57 @@
 :root {
 	/* colors */
 
+	--color-alpha-light-x: #ffffff;
+	--color-alpha-light: #c7c7c7;
+	--color-alpha: #808080;
+	--color-alpha-dark: #444444;
+	--color-alpha-x-dark: #000000;
+
+	--color-neutral-light: var(--color-alpha-light);
+	--color-neutral-dark: var(--color-alpha-x-dark);
+
+	--global-color-alpha-x-transparent: #ffffff4d;
+	--global-color-error-x-transparent: #ff33334d;
+
 	/* Font weights */
+	--global-default-weight: 400;
 
 	/* Shadows */
+	--shadow-neutral: 0 2px 6px rgba(0, 0, 0, 0.04);
+	--shadow-bottom: 0 2px 6px rgba(0, 0, 0, 0.04);
 
 	/* border radius */
+	--global-borderRadius: 3px;
+	--global-borderWidth: 1px;
 
 	/* transitions */
+	--global-transitionEasing-out: ease-out;
+	--global-transitionEasing-out-cubic: cubic-bezier(0.22, 0.61, 0.36, 1);
+	--global-transitionDuration-alpha: 0.1s;
+	--global-transitionDuration-beta: 0.2s;
+	--global-transitionDuration-gamma: 0.3s;
 
 	/* Grid System */
+
+	--global-baseline: 8px;
+	--global-whitespace: calc(var(--global-baseline) * 3);
+
+	--global-whitespace-xs: calc(var(--global-baseline) * 0.5);
+	--global-whitespace-sm: calc(var(--global-baseline) * 1);
+	--global-whitespace-md: calc(var(--global-baseline) * 2);
+	--global-whitespace-lg: calc(var(--global-baseline) * 4);
+	--global-whitespace-xl: calc(var(--global-whitespace) * 2);
+	--global-whitespace-xxl: calc(var(--global-whitespace) * 3);
+
+	--layout-header-height: calc(var(--global-baseline) * 5);
+
+	--global-input-focus-boxShadowSpread: 0 0 0 3px;
+	--global-input-focus-boxShadowColor: var(--global-color-alpha-x-transparent);
+	--global-input-error-boxShadowColor: var(--global-color-error-x-transparent);
+
+	--color-input-alpha-x-light: #81b4e7;
+	--color-input-alpha: #5398de;
+	--color-input-alpha-x-dark: #447db6;
 }
 
 /*------------------------------------*\
@@ -31,9 +94,10 @@
 */
 
 html {
-	font-size: 15px;
+	font-size: 16px;
+	font-weight: var(--global-default-weight);
 	line-height: 1.5;
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'futura-pt', sans-serif;
 	color: var(--color-neutral-dark);
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;
@@ -168,7 +232,7 @@ hr {
 
 a {
 	transition: all var(--global-transitionDuration-alpha);
-	color: var(--color-alpha);
+	color: var(--color-input-alpha);
 	outline-color: var(--color-alpha);
 	outline-width: medium;
 	outline-offset: 2px;
@@ -176,12 +240,12 @@ a {
 
 a:visited,
 a:active {
-	color: var(--color-alpha);
+	color: var(--color-input-alpha-x-light);
 }
 
 a:hover,
 a:focus {
-	color: var(--color-alpha-light);
+	color: var(--color-input-alpha-x-light);
 }
 
 label,
@@ -197,6 +261,10 @@ input::placeholder {
 	color: var(--color-neutral-light);
 }
 
+span {
+	font-weight: 700;
+	font-size: 20px;
+}
 /*------------------------------------*\
 #OBJECTS
 \*------------------------------------*/
@@ -282,9 +350,277 @@ input::placeholder {
 	border: 0;
 }
 
+/*
+    Object: Button reset
+    ---
+    Small button reset object
+*/
+
+.o-button-reset {
+	border: none;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	overflow: visible;
+	background: transparent;
+
+	/* inherit font & color from ancestor */
+	color: inherit;
+	font: inherit;
+
+	/* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+	line-height: normal;
+
+	/* Corrects font smoothing for webkit */
+	-webkit-font-smoothing: inherit;
+	-moz-osx-font-smoothing: inherit;
+
+	/* Corrects inability to style clickable `input` types in iOS */
+	-webkit-appearance: none;
+}
+
 /*------------------------------------*\
 #COMPONENTS
 \*------------------------------------*/
+
+.c-app {
+	height: 100vh;
+	grid-template-rows: auto 1fr;
+}
+
+.c-app__header {
+	background-color: var(--color-neutral-x-light);
+	display: none;
+	box-shadow: var(--shadow-neutral);
+	z-index: 1;
+}
+
+.c-app__container {
+	margin: auto;
+}
+
+.c-app__grid {
+	display: grid;
+	grid-gap: calc(var(--global-baseline) * 5);
+	justify-items: center;
+}
+
+@media screen and (min-width: 992px) {
+	.c-app__grid {
+		grid-template-columns: repeat(6, 1fr);
+	}
+
+	.c-main__item {
+		grid-column: span 6;
+	}
+}
+
+.c-main__item {
+	background-color: #fff;
+	padding: calc(var(--global-baseline) * 5);
+	width: 100%;
+	display: flex;
+}
+
+.c-brand {
+	font-size: 56px;
+	font-weight: 700;
+	padding: 0 calc(var(--global-baseline) * 8);
+}
+
+.c-image {
+	height: 80%;
+	width: 80%;
+}
+
+@media screen and (min-width: 960px) {
+	.c-app {
+		display: grid;
+	}
+
+	.c-app__header {
+		display: block;
+	}
+
+	.c-app__main {
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	.c-app__header {
+		display: block;
+	}
+}
+
+.c-main__top {
+	padding-top: 0;
+}
+
+.c-main__left {
+	display: flex;
+	align-items: center;
+	text-align: right;
+}
+
+.c-main__right {
+	display: flex;
+	align-items: center;
+	text-align: left;
+}
+
+.c-main__center {
+	padding-top: 0;
+}
+
+.c-main__bottom {
+	padding-top: 0;
+}
+
+.c-main__info {
+	padding: var(--global-whitespace-sm) 0;
+}
+
+.c-item {
+	margin: auto;
+}
+
+.c-item__image {
+	display: flex;
+	justify-content: center;
+}
+
+.c-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.c-footer__center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom: var(--global-whitespace-lg);
+}
+
+.c-item__title--center {
+	text-align: center;
+}
+
+.c-image__soon {
+	width: 50%;
+	height: 50%;
+}
+
+.c-form-field {
+	position: relative;
+}
+
+.is-floating,
+.c-form-field:focus-within .c-label--floating {
+	transform: translateY(calc(var(--global-baseline) * -3));
+}
+
+.c-label {
+	margin-bottom: 0;
+	font-size: 14px;
+	padding-bottom: var(--global-whitespace-sm);
+	line-height: calc(var(--global-baseline) * 2);
+	color: var(--color-alpha-x-dark);
+}
+
+.c-label--floating {
+	position: absolute;
+	top: calc(var(--global-baseline) * 2);
+	left: var(--global-whitespace-sm);
+	padding: 0 var(--global-whitespace-sm);
+	background-color: var(--color-alpha-light-x);
+	transition: transform var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
+	z-index: 1;
+}
+
+.c-input {
+	--input-transition: all var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: 100%;
+	border-radius: var(--global-borderRadius);
+	border: var(--global-borderWidth) solid var(--color-alpha-x-dark);
+	background-color: var(--color-alpha-light-x);
+	color: var(--color-alpha-x-dark);
+	font-family: inherit;
+	font-size: 16px;
+	line-height: calc(var(--global-baseline) * 3);
+	padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
+	outline: none;
+	transition: var(--input-transition);
+}
+
+.c-input:hover {
+	border-color: var(--color-alpha-x-dark);
+}
+
+.c-input:focus,
+.c-input:active {
+	border-color: var(--color-alpha-x-dark);
+	box-shadow: var(--global-input-focus-boxShadowSpread) var(--global-input-focus-boxShadowColor);
+}
+
+.c-input--with-floating-label:focus {
+	box-shadow: 0 0 0 1px var(--global-input-focus-borderColor);
+}
+
+/*
+    Component: Button
+    ---
+    Class to put on form buttons or
+*/
+
+.c-button {
+	font-size: 16px;
+	font-weight: 600;
+	border-radius: var(--global-borderRadius);
+	border: var(--global-borderWidth) solid var(--color-input-alpha-x-dark);
+	background-color: var(--color-input-alpha);
+	color: #fff;
+	padding: calc(var(--global-baseline) * 1.5 - var(--global-borderWidth)) var(--global-whitespace-md);
+	line-height: calc(var(--global-baseline) * 3);
+	width: 100%;
+	outline: none;
+	box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-alpha-x-light);
+	transition: all var(--global-transitionDuration-alpha) var(--global-transitionEasing-out);
+}
+
+.c-button:hover {
+	border-color: var(--color-input-alpha);
+	background-color: var(--color-input-alpha-x-dark);
+	box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-input-alpha-x-light);
+}
+
+.c-button:focus {
+	background-color: var(--color-input-alpha);
+	border-color: var(--color-input-alpha-x-dark);
+	box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-input-alpha-x-light);
+}
+
+.c-button:active {
+	background-color: var(--color-input-alpha-x-dark);
+	border-color: var(--color-input-alpha-x-dark);
+	box-shadow: var(--global-input-focus-boxShadowSpread) var(--color-input-alpha-x-light);
+}
+
+.c-info {
+	margin: auto;
+}
+
+.c-item__info {
+	display: flex;
+	flex-direction: row;
+}
+
+.c-info__text {
+	margin: 0 auto;
+	font-weight: 500;
+}
 
 /*------------------------------------*\
 #UTILITIES
@@ -295,6 +631,32 @@ input::placeholder {
     ---
     Utility classes to put specefic grid size onto elements
 */
+
+@media (min-width: 992px) {
+	.u-x-span-1-bp3 {
+		grid-column: span 1;
+	}
+
+	.u-x-span-2-bp3 {
+		grid-column: span 2;
+	}
+
+	.u-x-span-3-bp3 {
+		grid-column: span 3;
+	}
+
+	.u-x-span-4-bp3 {
+		grid-column: span 4;
+	}
+
+	.u-x-span-5-bp3 {
+		grid-column: span 5;
+	}
+
+	.u-x-span-6-bp3 {
+		grid-column: span 6;
+	}
+}
 
 /*
     Utilities: color
@@ -363,7 +725,7 @@ input::placeholder {
 }
 
 .u-max-width-lg {
-	max-width: 63.5em !important;
+	max-width: 85em !important;
 }
 
 .u-max-width-none {
