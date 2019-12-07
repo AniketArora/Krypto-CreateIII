@@ -36,6 +36,8 @@
 	--color-alpha-dark: #444444;
 	--color-alpha-x-dark: #000000;
 
+	--color-subtitle: #5c5c5c;
+
 	--color-neutral-light: var(--color-alpha-light);
 	--color-neutral-dark: var(--color-alpha-x-dark);
 
@@ -293,6 +295,10 @@ span {
 	width: 100%;
 }
 
+.o-container__app {
+	max-width: 30em;
+}
+
 /*
     Objects: List
     ---
@@ -405,6 +411,21 @@ span {
 	justify-items: center;
 }
 
+.c-header__main {
+	text-align: left;
+	font-size: 40px;
+}
+
+.c-header__title {
+	font-size: 24px;
+	font-weight: 500;
+	color: var(--color-subtitle);
+}
+
+.c-app__top {
+	padding-top: 0;
+}
+
 @media screen and (min-width: 992px) {
 	.c-app__grid {
 		grid-template-columns: repeat(6, 1fr);
@@ -445,10 +466,6 @@ span {
 	.c-app__main {
 		overflow-y: auto;
 		overflow-x: hidden;
-	}
-
-	.c-app__header {
-		display: block;
 	}
 }
 
