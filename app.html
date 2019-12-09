@@ -12,6 +12,7 @@
 
 		<link rel="stylesheet" href="https://use.typekit.net/omh4itr.css" />
 		<script src="js/app.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js" integrity="sha256-vyehT44mCOPZg7SbqfOZ0HNYXjPKgBCaqxBkW3lh6bg=" crossorigin="anonymous"></script>
 	</head>
 
 	<body>
@@ -27,15 +28,22 @@
 						Top
 					</h2>
 				</div>
-				<div class="c-app__cards">
-					<div class="c-app__card">
-						<div class="c-card__title"></div>
-						<div class="c-card__price"></div>
-						<div class="c-card__graph"></div>
+				<div class="c-app__cards o-row">
+					<div class="c-app__card js-card">
+						<div class="c-card__title js-title"></div>
+						<div class="c-card__label--price">
+							<div class="c-card__price js-price"></div>
+							<div class="c-card__percentage js-percentage"></div>
+						</div>
+						<div class="c-card__graph">
+							<canvas id="js-chart" width="240" height="260"></canvas>
+						</div>
 					</div>
 				</div>
-				<div class="c-app__more">
-					<h2 class="c-header__title"></h2>
+				<div class="c-app__more o-row">
+					<h2 class="c-header__title">
+						More
+					</h2>
 				</div>
 				<div class="c-app__list">
 					<div class="c-list__title"></div>
