@@ -426,7 +426,17 @@ span {
 	padding-top: 0;
 }
 
+.c-app__cards {
+	display: flex;
+	flex-flow: row;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	height: 348px;
+}
+
 .c-app__card {
+	margin-right: 16px;
 	height: 312px;
 	width: 240px;
 	box-shadow: var(--shadow-box);

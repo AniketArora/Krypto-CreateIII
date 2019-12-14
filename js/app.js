@@ -1,4 +1,73 @@
-let currencies;
+let currencies = [];
+let products = [];
+let currencyids = [];
+let stats = [];
+let names = [];
+
+let objects = [];
+
+function getBoxes() {
+	console.log(stats);
+	// console.log(currencies);
+	// console.log(currencyids);
+	// console.log(currencyids.length);
+	// console.log(currencyids[0]);
+
+	console.log(currencies);
+
+	// console.log(products);
+
+	for (i = 0; i < currencyids.length; i++) {
+		let currency;
+		let currencyobject = currencies[`${i}`];
+		console.log(currencyobject);
+		// console.log(currencies.length);
+		// console.log(stats[i]);
+
+		// for (i = 0; i < currencies.length; i++) {
+		// 	if (products[0].base_currency == currencies[i].id) {
+		// 		currency = element;
+		// 		console.log(currency);
+		// 	}
+		// }
+
+		let obj = {
+			id: currencyids[i],
+			//name: currencies[products.quote_currency]
+			price: stats[i]
+		};
+		objects.push(obj);
+	}
+
+	console.log(objects);
+
+	let html = `<div class="c-app__card js-card">
+		<div class="c-card__title js-title"></div>
+		<div class="c-card__label--price">
+			<div class="c-card__price js-price"></div>
+			<div class="c-card__percentage js-percentage"></div>
+		</div>
+		<div class="c-card__graph">
+			<canvas id="js-chart" width="240" height="260"></canvas>
+		</div>
+	</div>`;
+
+	for (i = 0; i < 5; i++) {
+		document.querySelector('.js-cards').innerHTML += html;
+	}
+}
+
+let setcurrencyid = queryResponse => {
+	let data = queryResponse;
+
+	data.forEach(element => {
+		if (element.quote_currency == 'EUR') {
+			currencyids.push(element.id);
+			products.push(element);
+			getStats(element.id);
+		}
+	});
+};
 
 function _parseMillisecondsIntoReadableTime(timestamp) {
 	//Get hours from milliseconds
@@ -130,51 +199,57 @@ let setColors = function(currency) {
 	}
 };
 
-let getCandles = function(id) {
+let getCandles = async function(id) {
 	URL = `https://api.pro.coinbase.com/products/${id}/candles`;
-	fetch(URL)
+	await fetch(URL)
 		.then(function(response) {
 			return response.json();
 		})
 		.then(function(data) {
-			showChart(data);
+			//showChart(data);
 		});
 };
 
-let getStats = function(id) {
+let getStats = async function(id) {
 	URL = `https://api.pro.coinbase.com/products/${id}/stats`;
-	fetch(URL)
+	await fetch(URL)
 		.then(function(response) {
 			return response.json();
 		})
 		.then(function(data) {
-			showStats(data);
+			stats.push(data);
 		});
 };
 
-let getCurrencies = function() {
+let getCurrencies = async function() {
 	URL = `https://api.pro.coinbase.com/currencies`;
-	fetch(URL)
+	await fetch(URL)
 		.then(function(response) {
 			return response.json();
 		})
 		.then(function(data) {
-			currencies = data;
+			data.forEach(element => {
+				currencies.push(element);
+			});
 		});
 };
 
-let getProducts = function() {
+let getProducts = async function() {
 	URL = `https://api.pro.coinbase.com/products`;
-	fetch(URL)
+	await fetch(URL)
 		.then(function(response) {
 			return response.json();
 		})
 		.then(function(data) {
-			showProducts(data);
+			setcurrencyid(data);
+			getCurrencies();
+		})
+		.finally(function() {
+			getBoxes();
 		});
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-	getCurrencies();
+	//getCurrencies();
 	getProducts();
 });
