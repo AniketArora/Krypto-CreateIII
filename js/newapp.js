@@ -109,21 +109,21 @@ const makeContainers = async function(objectlist) {
 		<div class="c-card__title js-title">${objectlist[i].name} (${objectlist[i].base_currency})</div>
 		<div class="c-card__label--price">
 			<div class="c-card__price js-price">€ ${Math.round(parseFloat(objectlist[i].price) * 100) / 100}</div>
-			<div class="c-card__percentage js-percentage">(${Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100} %)</div>
+			<div class="c-card__percentage js-percentage js-percentage-${i}">(${Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100} %)</div>
 		</div>
 		<div class="c-card__graph">
 			<canvas id="js-chart-${i}" width="240" height="260"></canvas>
 		</div>
-    </div>`;
+    	</div>`;
 
 		if (Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100 <= 0) {
 			var style = document.createElement('style');
 			document.head.appendChild(style);
-			style.sheet.insertRule('.js-percentage {color: #ff0000}');
+			style.sheet.insertRule(`.js-percentage-${i} {color: #ff0000}`);
 		} else {
 			var style = document.createElement('style');
 			document.head.appendChild(style);
-			style.sheet.insertRule('.js-percentage {color: #008000}');
+			style.sheet.insertRule(`.js-percentage-${i} {color: #008000}`);
 		}
 
 		var style = document.createElement('style');
@@ -148,17 +148,18 @@ const makeContainers = async function(objectlist) {
 		var ctx = document.getElementById(`js-chart-${i}`).getContext('2d');
 		console.log(ctx);
 
-		var myChart = new Chart(ctx, {
+		Chart.defaults.global.elements.point.radius = 0;
+
+		new Chart(ctx, {
 			type: 'line',
 			data: {
 				labels: newdates,
 				datasets: [
 					{
-						label: 'prices',
 						data: newprices,
-						borderWidth: 1,
+						borderWidth: 2,
 						borderColor: objectlist[i].color,
-						backgroundColor: objectlist[i].color
+						backgroundColor: 'rgba(255, 255, 255, 0.2)'
 					}
 				]
 			},
@@ -173,6 +174,10 @@ const makeContainers = async function(objectlist) {
 					]
 				},
 				legend: {
+					display: false
+				},
+				bezierCurve: true,
+				gridlines: {
 					display: false
 				}
 			}
