@@ -420,6 +420,7 @@ span {
 	font-size: 24px;
 	font-weight: 500;
 	color: var(--color-subtitle);
+	margin-bottom: 0;
 }
 
 .c-app__top {
@@ -433,6 +434,7 @@ span {
 	overflow-y: hidden;
 	white-space: nowrap;
 	height: 348px;
+	padding-top: 16px;
 }
 
 .c-app__card {
@@ -441,6 +443,32 @@ span {
 	width: 240px;
 	box-shadow: var(--shadow-box);
 	padding: var(--global-whitespace-md);
+}
+
+.c-app__list {
+	margin: var(--global-whitespace-md) calc(var(--global-baseline) * 3);
+}
+
+.c-app__listitem {
+	height: 112px;
+	width: 100%;
+	box-shadow: var(--shadow-box);
+	margin-top: 8px;
+	padding: 16px;
+}
+
+.c-list__percentage {
+	margin-left: var(--global-whitespace-sm);
+}
+
+.c-list__title {
+	font-weight: 500;
+	font-size: 24px;
+}
+
+.c-list__label--price {
+	display: flex;
+	flex-direction: row;
 }
 
 .c-card__title {

@@ -1,174 +1,17 @@
-let currencies = [];
-let products = [];
-let currencyids = [];
+let products;
+let currencies;
+
 let stats = [];
-let names = [];
 
-let objects = [];
+let productsInEuro = [];
 
-function getBoxes() {
-	console.log(stats);
-	// console.log(currencies);
-	// console.log(currencyids);
-	// console.log(currencyids.length);
-	// console.log(currencyids[0]);
+let objectlist = [];
 
-	console.log(currencies);
+let stat;
 
-	// console.log(products);
+let candles;
 
-	for (i = 0; i < currencyids.length; i++) {
-		let currency;
-		let currencyobject = currencies[`${i}`];
-		console.log(currencyobject);
-		// console.log(currencies.length);
-		// console.log(stats[i]);
-
-		// for (i = 0; i < currencies.length; i++) {
-		// 	if (products[0].base_currency == currencies[i].id) {
-		// 		currency = element;
-		// 		console.log(currency);
-		// 	}
-		// }
-
-		let obj = {
-			id: currencyids[i],
-			//name: currencies[products.quote_currency]
-			price: stats[i]
-		};
-		objects.push(obj);
-	}
-
-	console.log(objects);
-
-	let html = `<div class="c-app__card js-card">
-		<div class="c-card__title js-title"></div>
-		<div class="c-card__label--price">
-			<div class="c-card__price js-price"></div>
-			<div class="c-card__percentage js-percentage"></div>
-		</div>
-		<div class="c-card__graph">
-			<canvas id="js-chart" width="240" height="260"></canvas>
-		</div>
-	</div>`;
-
-	for (i = 0; i < 5; i++) {
-		document.querySelector('.js-cards').innerHTML += html;
-	}
-}
-
-let setcurrencyid = queryResponse => {
-	let data = queryResponse;
-
-	data.forEach(element => {
-		if (element.quote_currency == 'EUR') {
-			currencyids.push(element.id);
-			products.push(element);
-			getStats(element.id);
-		}
-	});
-};
-
-function _parseMillisecondsIntoReadableTime(timestamp) {
-	//Get hours from milliseconds
-	const date = new Date(timestamp * 1000);
-	// Hours part from the timestamp
-	const hours = '0' + date.getHours();
-	// Minutes part from the timestamp
-	const minutes = '0' + date.getMinutes();
-	// Seconds part from the timestamp (gebruiken we nu niet)
-	// const seconds = '0' + date.getSeconds();
-
-	// Will display time in 10:30(:23) format
-	return hours.substr(-2) + ':' + minutes.substr(-2); //  + ':' + s
-}
-
-let showProducts = queryResponse => {
-	const productsFilter = queryResponse.filter(x => x.quote_currency == 'EUR');
-	const currency = currencies.filter(x => x.id == productsFilter[0].base_currency);
-
-	let title = `${currency[0].name} (${productsFilter[0].base_currency})`;
-	document.querySelector('.js-title').innerHTML = title;
-
-	getStats(productsFilter[0].id);
-
-	let color = setColors(productsFilter[0].base_currency);
-
-	var style = document.createElement('style');
-	document.head.appendChild(style);
-	style.sheet.insertRule(`.js-card {border-bottom: 2px solid ${color}}`);
-
-	getCandles(productsFilter[0].id);
-};
-
-let showChart = queryResponse => {
-	let prices = [];
-	let dates = [];
-	let data = queryResponse;
-	let element = document.querySelector('.js-card');
-	let color = element.style.borderBottomColor;
-
-	for (let item of data) {
-		dates.push(_parseMillisecondsIntoReadableTime(item[0]));
-		prices.push(item[4]);
-	}
-
-	let newdates = dates.reverse();
-	let newprices = prices.reverse();
-
-	var ctx = document.getElementById('js-chart').getContext('2d');
-	var myChart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: newdates,
-			datasets: [
-				{
-					label: 'prices',
-					data: newprices,
-					borderWidth: 1,
-					backgroundColor: color,
-					borderColor: color
-				}
-			]
-		},
-		options: {
-			scales: {
-				yAxes: [
-					{
-						ticks: {
-							beginAtZero: false
-						}
-					}
-				]
-			}
-		}
-	});
-};
-
-let showStats = queryResponse => {
-	let last = queryResponse.last;
-	let open = queryResponse.open;
-
-	let price = Math.round(last * 100) / 100;
-	let pricelabel = `€ ${price}`;
-	let percentage = Math.round(((last - open) / open) * 100 * 100) / 100;
-	let percentagelabel = `(${percentage} %)`;
-
-	document.querySelector('.js-price').innerHTML = pricelabel;
-	document.querySelector('.js-percentage').innerHTML = percentagelabel;
-
-	if (percentage <= 0) {
-		var style = document.createElement('style');
-		document.head.appendChild(style);
-		style.sheet.insertRule('.js-percentage {color: #ff0000}');
-	} else {
-		var style = document.createElement('style');
-		document.head.appendChild(style);
-		style.sheet.insertRule('.js-percentage {color: #008000}');
-	}
-};
-
-let setColors = function(currency) {
+const setColors = function(currency) {
 	switch (currency) {
 		case 'BTC':
 			return '#F7931A';
@@ -199,6 +42,163 @@ let setColors = function(currency) {
 	}
 };
 
+const checkdata = async function() {
+	products.forEach(element => {
+		if (element.quote_currency == 'EUR') {
+			productsInEuro.push(element);
+		}
+	});
+
+	for (i = 0; i < productsInEuro.length; i++) {
+		let currency;
+
+		currencies.forEach(element => {
+			if (productsInEuro[i].base_currency === element.id) {
+				currency = element;
+			}
+		});
+
+		await getStats(productsInEuro[i].id);
+
+		let item = {
+			id: productsInEuro[i].id,
+			base_currency: productsInEuro[i].base_currency,
+			quote_currency: productsInEuro[i].quote_currency,
+			name: currency.name,
+			price: stat.last,
+			open: stat.open,
+			color: setColors(productsInEuro[i].base_currency)
+		};
+
+		objectlist.push(item);
+	}
+
+	let sortedlist = objectlist.sort((a, b) => (parseFloat(a.price) < parseFloat(b.price) ? 1 : -1));
+
+	console.log(sortedlist);
+
+	await makeContainers(sortedlist);
+
+	await makelist(sortedlist);
+};
+
+function _parseMillisecondsIntoReadableTime(timestamp) {
+	//Get hours from milliseconds
+	const date = new Date(timestamp * 1000);
+	// Hours part from the timestamp
+	const hours = '0' + date.getHours();
+	// Minutes part from the timestamp
+	const minutes = '0' + date.getMinutes();
+	// Seconds part from the timestamp (gebruiken we nu niet)
+	// const seconds = '0' + date.getSeconds();
+
+	// Will display time in 10:30(:23) format
+	return hours.substr(-2) + ':' + minutes.substr(-2); //  + ':' + s
+}
+
+const makelist = async function(objectlist) {
+	for (i = 5; i < objectlist.length; i++) {
+		console.log(objectlist[i]);
+
+		document.querySelector('.js-list').innerHTML += `<div class="c-app__listitem js-listitem">
+		<div class="c-list__title">${objectlist[i].name} (${objectlist[i].base_currency})</div>
+			<div class="c-list__label--price">
+				<div class="c-list__price">€ ${Math.round(parseFloat(objectlist[i].price) * 100) / 100}</div>
+				<div class="c-list__percentage js-percent-${i}"> (${Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100} %) </div>
+			</div>
+		</div>`;
+
+		if (Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100 < 0) {
+			var style = document.createElement('style');
+			document.head.appendChild(style);
+			style.sheet.insertRule(`.js-percent-${i} {color: #ff0000}`);
+		} else {
+			var style = document.createElement('style');
+			document.head.appendChild(style);
+			style.sheet.insertRule(`.js-percent-${i} {color: #008000}`);
+		}
+	}
+};
+
+const makeContainers = async function(objectlist) {
+	for (i = 0; i < 5; i++) {
+		document.querySelector('.js-cards').innerHTML += `<div class="c-app__card js-card js-card-${i}">
+		<div class="c-card__title js-title">${objectlist[i].name} (${objectlist[i].base_currency})</div>
+		<div class="c-card__label--price">
+			<div class="c-card__price js-price">€ ${Math.round(parseFloat(objectlist[i].price) * 100) / 100}</div>
+			<div class="c-card__percentage js-percentage js-percentage-${i}">(${Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100} %)</div>
+		</div>
+		<div class="c-card__graph">
+			<canvas id="js-chart-${i}" width="240" height="260"></canvas>
+		</div>
+    	</div>`;
+
+		if (Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100 < 0) {
+			var style = document.createElement('style');
+			document.head.appendChild(style);
+			style.sheet.insertRule(`.js-percentage-${i} {color: #ff0000}`);
+		} else {
+			var style = document.createElement('style');
+			document.head.appendChild(style);
+			style.sheet.insertRule(`.js-percentage-${i} {color: #008000}`);
+		}
+
+		var style = document.createElement('style');
+		document.head.appendChild(style);
+		style.sheet.insertRule(`.js-card-${i} {border-bottom: 2px solid ${objectlist[i].color}}`);
+
+		let prices = [];
+		let dates = [];
+
+		await getCandles(objectlist[i].id);
+
+		for (let item of candles) {
+			dates.push(_parseMillisecondsIntoReadableTime(item[0]));
+			prices.push(item[4]);
+		}
+
+		let newdates = dates.reverse();
+		let newprices = prices.reverse();
+
+		var ctx = document.getElementById(`js-chart-${i}`).getContext('2d');
+		console.log(ctx);
+
+		Chart.defaults.global.elements.point.radius = 0;
+
+		var chart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: newdates,
+				datasets: [
+					{
+						data: newprices,
+						borderWidth: 2,
+						borderColor: objectlist[i].color,
+						backgroundColor: 'rgba(255, 255, 255, 0.2)'
+					}
+				]
+			},
+			options: {
+				scales: {
+					yAxes: [
+						{
+							ticks: {
+								beginAtZero: false
+							}
+						}
+					]
+				},
+				legend: {
+					display: false
+				},
+				bezierCurve: true
+			}
+		});
+
+		chart.render();
+	}
+};
+
 let getCandles = async function(id) {
 	URL = `https://api.pro.coinbase.com/products/${id}/candles`;
 	await fetch(URL)
@@ -206,7 +206,7 @@ let getCandles = async function(id) {
 			return response.json();
 		})
 		.then(function(data) {
-			//showChart(data);
+			candles = data;
 		});
 };
 
@@ -217,20 +217,7 @@ let getStats = async function(id) {
 			return response.json();
 		})
 		.then(function(data) {
-			stats.push(data);
-		});
-};
-
-let getCurrencies = async function() {
-	URL = `https://api.pro.coinbase.com/currencies`;
-	await fetch(URL)
-		.then(function(response) {
-			return response.json();
-		})
-		.then(function(data) {
-			data.forEach(element => {
-				currencies.push(element);
-			});
+			stat = data;
 		});
 };
 
@@ -241,15 +228,27 @@ let getProducts = async function() {
 			return response.json();
 		})
 		.then(function(data) {
-			setcurrencyid(data);
-			getCurrencies();
-		})
-		.finally(function() {
-			getBoxes();
+			products = data;
 		});
 };
 
+let getCurrencies = async function() {
+	URL = `https://api.pro.coinbase.com/currencies`;
+	await fetch(URL)
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(data) {
+			currencies = data;
+		});
+};
+
+const getalldata = async function() {
+	await getProducts();
+	await getCurrencies();
+	await checkdata();
+};
+
 document.addEventListener('DOMContentLoaded', function() {
-	//getCurrencies();
-	getProducts();
+	getalldata();
 });
