@@ -392,6 +392,11 @@ span {
 .c-app {
 	height: 100vh;
 	grid-template-rows: auto 1fr;
+	width: 100vw;
+}
+
+.c-app__page {
+	width: 100%;
 }
 
 .c-app__header {
@@ -433,12 +438,38 @@ span {
 	overflow-x: auto;
 	overflow-y: hidden;
 	white-space: nowrap;
-	height: 348px;
+	height: 360px;
 	padding-top: 16px;
 }
 
+.js-card-4 {
+	margin-right: 40px !important;
+}
+
+.js-card-0 {
+	margin-left: 0;
+}
+
+.c-app__cards::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.01);
+	border-radius: var(--global-baseline);
+	background-color: #f5f5f5;
+}
+
+.c-app__cards::-webkit-scrollbar {
+	width: var(--global-whitespace-xs);
+	background-color: #f5f5f5;
+	margin: 0 var(--global-baseline);
+}
+
+.c-app__cards::-webkit-scrollbar-thumb {
+	border-radius: var(--global-whitespace);
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.01);
+	background-color: var(--color-alpha-light);
+}
+
 .c-app__card {
-	margin-right: 16px;
+	margin: 0 var(--global-baseline);
 	height: 312px;
 	width: 240px;
 	box-shadow: var(--shadow-box);
@@ -714,6 +745,78 @@ span {
 	font-weight: 500;
 }
 
+:root {
+	--pi: 3.14159265359;
+	--loader-viewbox: 50px;
+	--circle-stroke-width: 5px;
+	--circle-center: calc(var(--loader-viewbox) / 2);
+	--circle-radius: calc(var(--loader-viewbox) / 2 - var(--circle-stroke-width) / 2);
+	--circle-circumference: calc(var(--circle-radius) * 2 * var(--pi));
+	--circle-gap: 20px;
+	--circle-circumference-gap: calc(var(--circle-circumference) - var(--circle-gap));
+	--animation-duration: 1.5s;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.c-loader {
+	width: var(--loader-viewbox);
+	height: var(--loader-viewbox);
+}
+
+.c-loader__circle {
+	stroke: OrangeRed;
+	fill: transparent;
+	stroke-linecap: round;
+	stroke-width: var(--circle-stroke-width);
+	stroke-dasharray: var(--circle-gap), var(--circle-circumference-gap);
+	stroke-dashoffset: 0;
+	r: var(--circle-radius);
+	cx: var(--circle-center);
+	cy: var(--circle-center);
+	animation: rotateCircle calc(var(--animation-duration) + 0.25s) linear infinite, strokeCircle var(--animation-duration) infinite, strokeColor calc(var(--animation-duration) * 5) calc(var(--animation-duration) / 2) infinite;
+	transform-origin: center;
+}
+
+@keyframes rotateCircle {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes strokeCircle {
+	50% {
+		stroke-dasharray: var(--circle-circumference-gap), var(--circle-gap);
+		stroke-dashoffset: 0;
+	}
+	100% {
+		stroke-dasharray: var(--circle-gap), var(--circle-circumference-gap);
+		stroke-dashoffset: calc(var(--circle-circumference) * -1);
+	}
+}
+
+@keyframes strokeColor {
+	20% {
+		stroke: gold;
+	}
+	40% {
+		stroke: LimeGreen;
+	}
+	60% {
+		stroke: DodgerBlue;
+	}
+	80% {
+		stroke: HotPink;
+	}
+}
+
 /*------------------------------------*\
 #UTILITIES
 \*------------------------------------*/
@@ -845,6 +948,10 @@ span {
 
 .u-text-sm {
 	font-size: 14px;
+}
+
+.u-hidden {
+	display: none !important;
 }
 
 /*------------------------------------*\

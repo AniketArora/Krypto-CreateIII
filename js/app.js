@@ -128,8 +128,8 @@ const makeContainers = async function(objectlist) {
 			<div class="c-card__price js-price">€ ${Math.round(parseFloat(objectlist[i].price) * 100) / 100}</div>
 			<div class="c-card__percentage js-percentage js-percentage-${i}">(${Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100} %)</div>
 		</div>
-		<div class="c-card__graph">
-			<canvas id="js-chart-${i}" width="240" height="260"></canvas>
+		<div class="c-card__graph js-card-graph-${i}">
+			<canvas id="js-chart-${i}" width="200" height="240"></canvas>
 		</div>
     	</div>`;
 
@@ -146,57 +146,266 @@ const makeContainers = async function(objectlist) {
 		var style = document.createElement('style');
 		document.head.appendChild(style);
 		style.sheet.insertRule(`.js-card-${i} {border-bottom: 2px solid ${objectlist[i].color}}`);
+	}
 
-		let prices = [];
-		let dates = [];
+	document.querySelector('.c-loader').classList.add('u-hidden');
+	document.querySelector('.c-app').classList.remove('u-hidden');
 
-		await getCandles(objectlist[i].id);
+	await makechart1(objectlist);
+	await makechart2(objectlist);
+	await makechart3(objectlist);
+	await makechart4(objectlist);
+	await makechart5(objectlist);
+};
 
-		for (let item of candles) {
-			dates.push(_parseMillisecondsIntoReadableTime(item[0]));
-			prices.push(item[4]);
-		}
+let makechart1 = async function(objectlist) {
+	let prices = [];
+	let dates = [];
 
-		let newdates = dates.reverse();
-		let newprices = prices.reverse();
+	await getCandles(objectlist[0].id);
 
-		var ctx = document.getElementById(`js-chart-${i}`).getContext('2d');
-		console.log(ctx);
+	for (let item of candles) {
+		dates.push(_parseMillisecondsIntoReadableTime(item[0]));
+		prices.push(item[4]);
+	}
 
-		Chart.defaults.global.elements.point.radius = 0;
+	let newdates = dates.reverse();
+	let newprices = prices.reverse();
 
-		var chart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: newdates,
-				datasets: [
+	var ctx = document.getElementById(`js-chart-${0}`).getContext('2d');
+	console.log(ctx);
+
+	Chart.defaults.global.elements.point.radius = 0;
+
+	var chart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: newdates,
+			datasets: [
+				{
+					data: newprices,
+					borderWidth: 2,
+					borderColor: objectlist[0].color,
+					backgroundColor: 'rgba(255, 255, 255, 0.2)'
+				}
+			]
+		},
+		options: {
+			scales: {
+				yAxes: [
 					{
-						data: newprices,
-						borderWidth: 2,
-						borderColor: objectlist[i].color,
-						backgroundColor: 'rgba(255, 255, 255, 0.2)'
+						ticks: {
+							beginAtZero: false
+						}
 					}
 				]
 			},
-			options: {
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								beginAtZero: false
-							}
-						}
-					]
-				},
-				legend: {
-					display: false
-				},
-				bezierCurve: true
-			}
-		});
+			legend: {
+				display: false
+			},
+			bezierCurve: true
+		}
+	});
+};
 
-		chart.render();
+let makechart2 = async function(objectlist) {
+	let prices = [];
+	let dates = [];
+
+	await getCandles(objectlist[1].id);
+
+	for (let item of candles) {
+		dates.push(_parseMillisecondsIntoReadableTime(item[0]));
+		prices.push(item[4]);
 	}
+
+	let newdates = dates.reverse();
+	let newprices = prices.reverse();
+
+	var ctx = document.getElementById(`js-chart-${1}`).getContext('2d');
+	console.log(ctx);
+
+	Chart.defaults.global.elements.point.radius = 0;
+
+	var chart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: newdates,
+			datasets: [
+				{
+					data: newprices,
+					borderWidth: 2,
+					borderColor: objectlist[1].color,
+					backgroundColor: 'rgba(255, 255, 255, 0.2)'
+				}
+			]
+		},
+		options: {
+			scales: {
+				yAxes: [
+					{
+						ticks: {
+							beginAtZero: false
+						}
+					}
+				]
+			},
+			legend: {
+				display: false
+			},
+			bezierCurve: true
+		}
+	});
+};
+
+let makechart3 = async function(objectlist) {
+	let prices = [];
+	let dates = [];
+
+	await getCandles(objectlist[2].id);
+
+	for (let item of candles) {
+		dates.push(_parseMillisecondsIntoReadableTime(item[0]));
+		prices.push(item[4]);
+	}
+
+	let newdates = dates.reverse();
+	let newprices = prices.reverse();
+
+	var ctx = document.getElementById(`js-chart-${2}`).getContext('2d');
+	console.log(ctx);
+
+	Chart.defaults.global.elements.point.radius = 0;
+
+	var chart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: newdates,
+			datasets: [
+				{
+					data: newprices,
+					borderWidth: 2,
+					borderColor: objectlist[2].color,
+					backgroundColor: 'rgba(255, 255, 255, 0.2)'
+				}
+			]
+		},
+		options: {
+			scales: {
+				yAxes: [
+					{
+						ticks: {
+							beginAtZero: false
+						}
+					}
+				]
+			},
+			legend: {
+				display: false
+			},
+			bezierCurve: true
+		}
+	});
+};
+
+let makechart4 = async function(objectlist) {
+	let prices = [];
+	let dates = [];
+
+	await getCandles(objectlist[3].id);
+
+	for (let item of candles) {
+		dates.push(_parseMillisecondsIntoReadableTime(item[0]));
+		prices.push(item[4]);
+	}
+
+	let newdates = dates.reverse();
+	let newprices = prices.reverse();
+
+	var ctx = document.getElementById(`js-chart-${3}`).getContext('2d');
+	console.log(ctx);
+
+	Chart.defaults.global.elements.point.radius = 0;
+
+	var chart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: newdates,
+			datasets: [
+				{
+					data: newprices,
+					borderWidth: 2,
+					borderColor: objectlist[3].color,
+					backgroundColor: 'rgba(255, 255, 255, 0.2)'
+				}
+			]
+		},
+		options: {
+			scales: {
+				yAxes: [
+					{
+						ticks: {
+							beginAtZero: false
+						}
+					}
+				]
+			},
+			legend: {
+				display: false
+			},
+			bezierCurve: true
+		}
+	});
+};
+
+let makechart5 = async function(objectlist) {
+	let prices = [];
+	let dates = [];
+
+	await getCandles(objectlist[4].id);
+
+	for (let item of candles) {
+		dates.push(_parseMillisecondsIntoReadableTime(item[0]));
+		prices.push(item[4]);
+	}
+
+	let newdates = dates.reverse();
+	let newprices = prices.reverse();
+
+	var ctx = document.getElementById(`js-chart-${4}`).getContext('2d');
+	console.log(ctx);
+
+	Chart.defaults.global.elements.point.radius = 0;
+
+	var chart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: newdates,
+			datasets: [
+				{
+					data: newprices,
+					borderWidth: 2,
+					borderColor: objectlist[4].color,
+					backgroundColor: 'rgba(255, 255, 255, 0.2)'
+				}
+			]
+		},
+		options: {
+			scales: {
+				yAxes: [
+					{
+						ticks: {
+							beginAtZero: false
+						}
+					}
+				]
+			},
+			legend: {
+				display: false
+			},
+			bezierCurve: true
+		}
+	});
 };
 
 let getCandles = async function(id) {

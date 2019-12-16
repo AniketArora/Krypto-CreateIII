@@ -16,7 +16,11 @@
 	</head>
 
 	<body>
-		<div class="c-app">
+		<svg class="c-loader" viewbox="0 0 50 50">
+			<circle class="c-loader__circle"></circle>
+		</svg>
+
+		<div class="c-app u-hidden">
 			<div class="c-app__container o-container o-container__app">
 				<div class="c-app_header o-row">
 					<h1 class="c-header__main">
@@ -28,26 +32,13 @@
 						Top
 					</h2>
 				</div>
-				<div class="c-app__cards js-cards o-row">
-					<!-- <div class="c-app__card js-card">
-						<div class="c-card__title js-title"></div>
-						<div class="c-card__label--price">
-							<div class="c-card__price js-price"></div>
-							<div class="c-card__percentage js-percentage"></div>
-						</div>
-						<div class="c-card__graph">
-							<canvas id="js-chart" width="240" height="260"></canvas>
-						</div>
-					</div> -->
-				</div>
+				<div class="c-app__cards js-cards o-row"></div>
 				<div class="c-app__more o-row">
 					<h2 class="c-header__title">
 						More
 					</h2>
 				</div>
-				<div class="c-app__list js-list">
-
-				</div>
+				<div class="c-app__list js-list"></div>
 			</div>
 		</div>
 	</body>
