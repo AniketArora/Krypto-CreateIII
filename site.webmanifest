@@ -1,6 +1,6 @@
 {
-    "name": "Blockport",
-    "short_name": "Blockport",
+    "name": "Krypto",
+    "short_name": "Krypto",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#3385ff",
-    "background_color": "#3385ff",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
     "display": "standalone"
 }
