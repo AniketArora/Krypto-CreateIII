@@ -493,6 +493,13 @@ span {
 	width: 240px;
 	box-shadow: var(--shadow-box);
 	padding: var(--global-whitespace-md);
+	transition: 250ms;
+	border: 2px solid white;
+}
+
+.c-app__card:hover {
+	border: 2px solid black;
+	transition: 250ms;
 }
 
 .c-app__list {
@@ -505,6 +512,13 @@ span {
 	box-shadow: var(--shadow-box);
 	margin-top: 8px;
 	padding: 16px;
+	border: 2px solid white;
+	transition: 250ms;
+}
+
+.c-app__listitem:hover {
+	border: 2px solid black;
+	transition: 250ms;
 }
 
 .c-list__percentage {
@@ -580,6 +594,17 @@ span {
 .c-item__svg svg {
 	display: block;
 	width: 100%;
+}
+
+.c-item__timer {
+	display: flex;
+	grid-row: auto;
+}
+
+.c-timer {
+	margin: var(--global-baseline);
+	font-size: 24px;
+	font-weight: 800;
 }
 
 @media screen and (min-width: 960px) {
