@@ -117,6 +117,10 @@ const makelist = async function(objectlist) {
 			document.head.appendChild(style);
 			style.sheet.insertRule(`.js-percent-${i} {color: #008000}`);
 		}
+
+		var style = document.createElement('style');
+		document.head.appendChild(style);
+		style.sheet.insertRule(`.js-card-${i}:hover {border: 2px solid ${objectlist[i].color}}`);
 	}
 };
 
@@ -129,7 +133,7 @@ const makeContainers = async function(objectlist) {
 			<div class="c-card__percentage js-percentage js-percentage-${i}">(${Math.round(((objectlist[i].price - objectlist[i].open) / objectlist[i].open) * 100 * 100) / 100} %)</div>
 		</div>
 		<div class="c-card__graph js-card-graph-${i}">
-			<canvas id="js-chart-${i}" width="200" height="240"></canvas>
+			<canvas id="js-chart-${i}" width="180" height="230"></canvas>
 		</div>
     	</div>`;
 
@@ -146,6 +150,7 @@ const makeContainers = async function(objectlist) {
 		var style = document.createElement('style');
 		document.head.appendChild(style);
 		style.sheet.insertRule(`.js-card-${i} {border-bottom: 2px solid ${objectlist[i].color}}`);
+		style.sheet.insertRule(`.js-card-${i}:hover {border: 2px solid ${objectlist[i].color}}`);
 	}
 
 	document.querySelector('.c-loader').classList.add('u-hidden');
